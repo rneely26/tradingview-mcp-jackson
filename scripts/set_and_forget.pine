@@ -202,10 +202,7 @@ if short_signal
     line.new(bar_index - 1, sl_price, bar_index + 10, sl_price, color=bear_color,  width=1, style=line.style_dashed)
 
 // ─── DASHBOARD TABLE ──────────────────────────────────────────────────────────
-var table dash = table.new(position.top_right, 2, 7,
-                            bgcolor=color.new(color.black, 65),
-                            border_color=color.new(color.gray, 50), border_width=1,
-                            frame_color=color.new(color.gray, 50), frame_width=1)
+var table dash = table.new(position.top_right, 2, 7, bgcolor=color.new(color.black, 65), border_color=color.new(color.gray, 50), border_width=1, frame_color=color.new(color.gray, 50), frame_width=1)
 
 // Header
 table.cell(dash, 0, 0, "Set & Forget", text_color=color.white,
