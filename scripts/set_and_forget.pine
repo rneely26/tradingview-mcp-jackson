@@ -94,9 +94,18 @@ if show_round_levels and barstate.islast
                   textcolor=color.blue, size=size.tiny)
 
 // ─── CANDLESTICK DETECTION ────────────────────────────────────────────────────
-o  = open;  h  = high;  l  = low;  c  = close
-o1 = open[1]; h1 = high[1]; l1 = low[1]; c1 = close[1]
-o2 = open[2]; h2 = high[2]; l2 = low[2]; c2 = close[2]
+o  = open
+h  = high
+l  = low
+c  = close
+o1 = open[1]
+h1 = high[1]
+l1 = low[1]
+c1 = close[1]
+o2 = open[2]
+h2 = high[2]
+l2 = low[2]
+c2 = close[2]
 
 candle_range = h - l
 body         = math.abs(c - o)
