@@ -340,6 +340,17 @@ if short_signal
     line.new(bar_index - 1, sl_price, bar_index + 10, sl_price,
       color=bear_color, width=1, style=line.style_dashed)
 
+// ─── LAST ENTRY TRACKING ──────────────────────────────────────────────────────
+var string last_entry       = "None"
+var color  last_entry_color = neutral_color
+
+if long_signal
+    last_entry       := "LONG"
+    last_entry_color := bull_color
+if short_signal
+    last_entry       := "SHORT"
+    last_entry_color := bear_color
+
 // ─── DASHBOARD TABLE ──────────────────────────────────────────────────────────
 var table dash = table.new(position.top_right, 2, 13,
   bgcolor=color.new(color.black, 65),
@@ -387,13 +398,7 @@ table.cell(dash, 0, 10, "Max AOI",           text_color=color.gray, text_size=si
 table.cell(dash, 1, 10, str.tostring(aoi_max_pips, "#") + " pips",
   text_color=color.white, text_size=size.small, text_halign=text.align_center)
 
-table.cell(dash, 0, 11, "Signal",            text_color=color.gray, text_size=size.small, text_halign=text.align_left)
-table.cell(dash, 1, 11,
-  long_signal ? "LONG" : short_signal ? "SHORT" : "Wait",
-  text_color=long_signal ? bull_color : short_signal ? bear_color : neutral_color,
-  text_size=size.small, text_halign=text.align_center)
-
-// Row 12 — active pattern (chart patterns take priority over candlestick)
+// Row 11 — active pattern (chart patterns take priority over candlestick)
 active_pattern      = db_confirmed     ? "Dbl Bottom"  :
                       ihs_confirmed    ? "Inv H&S"     :
                       dt_confirmed     ? "Dbl Top"     :
@@ -410,8 +415,14 @@ active_pattern_bull = db_confirmed or ihs_confirmed or bull_candle
 active_pattern_bear = dt_confirmed or hs_confirmed or bear_candle
 pattern_color       = active_pattern_bull ? bull_color : active_pattern_bear ? bear_color : neutral_color
 
-table.cell(dash, 0, 12, "Pattern",           text_color=color.gray, text_size=size.small, text_halign=text.align_left)
-table.cell(dash, 1, 12, active_pattern,      text_color=pattern_color, text_size=size.small, text_halign=text.align_center)
+table.cell(dash, 0, 11, "Last Entry",        text_color=color.gray, text_size=size.small, text_halign=text.align_left)
+table.cell(dash, 1, 11, last_entry,          text_color=last_entry_color, text_size=size.small, text_halign=text.align_center)
+
+table.cell(dash, 0, 12, "Signal",            text_color=color.gray, text_size=size.small, text_halign=text.align_left)
+table.cell(dash, 1, 12,
+  long_signal ? "LONG" : short_signal ? "SHORT" : "Wait",
+  text_color=long_signal ? bull_color : short_signal ? bear_color : neutral_color,
+  text_size=size.small, text_halign=text.align_center)
 
 // ─── ALERTS ───────────────────────────────────────────────────────────────────
 alertcondition(long_signal,  "Claude Code S&F — Long",  "Long: all TF alignment + HH/HL + bullish pattern neckline break + above EMA")
